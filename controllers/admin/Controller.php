@@ -1,4 +1,4 @@
-<?php namespace Foostart\Sample\Controllers\Admin;
+<?php namespace Foostart\Comment\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller as BaseController;
@@ -19,7 +19,7 @@ class Controller extends BaseController {
     }
 
     public function addFlashMessage($message_key, $message_value) {
-        \Session::flash('message', trans('sample::sample_admin.message_add_successfully'));
+        \Session::flash('message', trans('comment::comment_admin.message_add_successfully'));
     }
 
 }

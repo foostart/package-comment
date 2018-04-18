@@ -1,6 +1,6 @@
 <?php
 
-namespace Foostart\Sample\Controlers\Admin;
+namespace Foostart\Comment\Controlers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use URL,
     Route,
     Redirect;
-use Foostart\Sample\Models\Samples;
+use Foostart\Comment\Models\Comments;
 
-class SampleFrontController extends Controller
+class CommentFrontController extends Controller
 {
     public $data = array();
     public function __construct() {
@@ -20,13 +20,13 @@ class SampleFrontController extends Controller
     public function index(Request $request)
     {
 
-        $obj_sample = new Samples();
-        $samples = $obj_sample->get_samples();
+        $obj_comment = new Comments();
+        $comments = $obj_comment->get_comments();
         $this->data = array(
             'request' => $request,
-            'samples' => $samples
+            'comments' => $comments
         );
-        return view('sample::sample.index', $this->data);
+        return view('comment::comment.index', $this->data);
     }
 
 }

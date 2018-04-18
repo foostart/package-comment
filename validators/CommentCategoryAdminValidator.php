@@ -1,15 +1,15 @@
 <?php
-namespace Foostart\Sample\Validators;
+namespace Foostart\Comment\Validators;
 
 use Event;
 use \LaravelAcl\Library\Validators\AbstractValidator;
 
 use Illuminate\Support\MessageBag as MessageBag;
 
-class SampleCategoryAdminValidator extends AbstractValidator
+class CommentCategoryAdminValidator extends AbstractValidator
 {
     protected static $rules = array(
-        'sample_category_name' => 'required',
+        'comment_category_name' => 'required',
     );
 
     protected static $messages = [];
@@ -36,7 +36,7 @@ class SampleCategoryAdminValidator extends AbstractValidator
 
     public function messages() {
         self::$messages = [
-            'required' => ':attribute '.trans('sample::sample_admin.required')
+            'required' => ':attribute '.trans('comment::comment_admin.required')
         ];
     }
 
@@ -44,12 +44,12 @@ class SampleCategoryAdminValidator extends AbstractValidator
 
         $flag = TRUE;
 
-        $min_lenght = config('sample_admin_.name_min_lengh');
-        $max_lenght = config('sample_admin_.name_max_lengh');
+        $min_lenght = config('comment_admin_.name_min_lengh');
+        $max_lenght = config('comment_admin_.name_max_lengh');
 
-        $sample_category_name = @$input['sample_category_name'];
+        $comment_category_name = @$input['comment_category_name'];
 
-        if ((strlen($sample_category_name) <= $min_lenght)  || ((strlen($sample_category_name) >= $max_lenght))) {
+        if ((strlen($comment_category_name) <= $min_lenght)  || ((strlen($comment_category_name) >= $max_lenght))) {
             $this->errors->add('name_unvalid_length', trans('name_unvalid_length', ['NAME_MIN_LENGTH' => $min_lenght, 'NAME_MAX_LENGTH' => $max_lenght]));
             $flag = TRUE;
         }

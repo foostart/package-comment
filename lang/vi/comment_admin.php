@@ -2,8 +2,8 @@
 
 return [
 
-    "package_name" => 'Sample',
-    "package_description" => 'Sample package is for initial',
+    "package_name" => 'Comment',
+    "package_description" => 'Comment package is for initial',
     "order" => '#',
     "operations" => 'Operations',
 
@@ -11,29 +11,29 @@ return [
      * Page
      */
 
-    'page_list' => 'List of samples',
+    'page_list' => 'List of comments',
     'page_add' => 'Add new item',
-    'page_edit' => 'Update sample item',
-    'page_search' => 'Sample page search',
+    'page_edit' => 'Update comment item',
+    'page_search' => 'Comment page search',
 
 
     /**
      * Form
      */
     'form_heading' => 'General data',
-    'form_add' => 'Add new sample item',
-    'form_edit' => 'Update sample item',
+    'form_add' => 'Add new comment item',
+    'form_edit' => 'Update comment item',
     'name' => 'Name',
-    'sample_required_name' => 'Required name',
+    'comment_required_name' => 'Required name',
     'required' => 'is required',
     'search' => 'Search',
 
     /**
      * Message
      */
-    'message_update_successfully' => 'Update sample item successfully',
-    'message_add_successfully' => 'Add new sample item successfully',
-    'message_delete_successfully' => 'Delete sample item successfully',
+    'message_update_successfully' => 'Update comment item successfully',
+    'message_add_successfully' => 'Add new comment item successfully',
+    'message_delete_successfully' => 'Delete comment item successfully',
     'message_find_failed' => 'Không có danh mục được tìm thấy.',
 
     /**
@@ -41,7 +41,7 @@ return [
      */
     'title_unvalid_length' => 'Unvalid lenght title. Allow from: <b>:TITLE_MIN_LENGTH</b> to <b>:TITLE_MAX_LENGTH</b>.',
 
-    'sample_name' => 'Sample name',
+    'comment_name' => 'Comment name',
 
     /**
      * Validator message
@@ -53,8 +53,8 @@ return [
     ///////////////////////////CATEGORIES///////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
     'page_category_list' => 'Categories',
-    'sample_category_add_button' => 'Thêm mới',
-    'sample_categoty_id' => 'Category ID',
-    'sample_categoty_name' => 'Tên category',
+    'comment_category_add_button' => 'Thêm mới',
+    'comment_categoty_id' => 'Category ID',
+    'comment_categoty_name' => 'Tên category',
 
 ];

@@ -1,7 +1,7 @@
-@extends('laravel-authentication-acl::admin.layouts.base-2cols')
+<!--@extends('laravel-authentication-acl::admin.layouts.base-2cols')-->
 
 @section('title')
-Admin area: {{ trans('sample::sample_admin.page_list') }}
+Admin area: {{ trans('comment::comment_admin.page_list') }}
 @stop
 
 @section('content')
@@ -13,7 +13,7 @@ Admin area: {{ trans('sample::sample_admin.page_list') }}
             <div class="panel panel-info">
 
                 <div class="panel-heading">
-                    <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> {!! $request->all() ? trans('sample::sample_admin.page_search') : trans('sample::sample_admin.page_list') !!}</h3>
+                    <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> {!! $request->all() ? trans('comment::comment_admin.page_search') : trans('comment::comment_admin.page_list') !!}</h3>
                 </div>
                 
                 <!--MESSAGE-->
@@ -31,12 +31,12 @@ Admin area: {{ trans('sample::sample_admin.page_list') }}
                 @endif 
                 <!--ERRORS-->
                 <div class="panel-body">
-                    @include('sample::sample.admin.sample_item')
+                    @include('comment::comment.admin.comment_item')
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            @include('sample::sample.admin.sample_search')
+            @include('comment::comment.admin.comment_search')
         </div>
     </div>
 </div>

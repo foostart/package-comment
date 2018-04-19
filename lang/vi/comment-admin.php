@@ -51,6 +51,7 @@ return [
         'operations' => 'Operations',
         'updated_at' => 'Updated at',
         'filename' => 'File name',
+           'id' => 'ID',
     ],
 
 

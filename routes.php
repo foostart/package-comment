@@ -16,82 +16,96 @@ Route::get('comment', [
  */
 Route::group(['middleware' => ['web']], function () {
 
-    Route::group(['middleware' => ['admin_logged', 'can_see']], function () {
+    Route::group(['middleware' => ['admin_logged', 'can_see'],
+                  'namespace' => 'Foostart\Comment\Controllers\Admin',
+        ], function () {
 
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////COMMENT ROUTE///////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
+        /*
+          |-----------------------------------------------------------------------
+          | Manage comment
+          |-----------------------------------------------------------------------
+          | 1. List of comments
+          | 2. Edit comment
+          | 3. Delete comment
+          | 4. Add new comment
+          | 5. Manage configurations
+          | 6. Manage languages
+          |
+        */
+
         /**
          * list
          */
-        Route::get('/admin/comment', [
-            'as' => 'admin_comment',
-            'uses' => 'Foostart\Comment\Controllers\Admin\CommentAdminController@index'
+        Route::get('admin/comments/list', [
+            'as' => 'comments.list',
+            'uses' => 'CommentAdminController@index'
         ]);
 
         /**
          * edit-add
          */
-        Route::get('admin/comment/edit', [
-            'as' => 'admin_comment.edit',
-            'uses' => 'Foostart\Comment\Controllers\Admin\CommentAdminController@edit'
+        Route::get('admin/comments/edit', [
+            'as' => 'comments.edit',
+            'uses' => 'CommentAdminController@edit'
+        ]);
+
+        /**
+         * copy
+         */
+        Route::get('admin/comments/copy', [
+            'as' => 'comments.copy',
+            'uses' => 'CommentAdminController@copy'
         ]);
 
         /**
          * post
          */
-        Route::post('admin/comment/edit', [
-            'as' => 'admin_comment.post',
-            'uses' => 'Foostart\Comment\Controllers\Admin\CommentAdminController@post'
+        Route::post('admin/comments/edit', [
+            'as' => 'comments.post',
+            'uses' => 'CommentAdminController@post'
         ]);
 
         /**
          * delete
          */
-        Route::get('admin/comment/delete', [
-            'as' => 'admin_comment.delete',
-            'uses' => 'Foostart\Comment\Controllers\Admin\CommentAdminController@delete'
-        ]);
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////COMMENT ROUTE///////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
-
-
-
-
-        
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////CATEGORIES///////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
-         Route::get('admin/comment_category', [
-            'as' => 'admin_comment_category',
-            'uses' => 'Foostart\Comment\Controllers\Admin\CommentCategoryAdminController@index'
+        Route::get('admin/comments/delete', [
+            'as' => 'comments.delete',
+            'uses' => 'CommentAdminController@delete'
         ]);
 
         /**
-         * edit-add
+         * trash
          */
-        Route::get('admin/comment_category/edit', [
-            'as' => 'admin_comment_category.edit',
-            'uses' => 'Foostart\Comment\Controllers\Admin\CommentCategoryAdminController@edit'
+         Route::get('admin/comments/trash', [
+            'as' => 'comments.trash',
+            'uses' => 'CommentAdminController@trash'
         ]);
 
         /**
-         * post
-         */
-        Route::post('admin/comment_category/edit', [
-            'as' => 'admin_comment_category.post',
-            'uses' => 'Foostart\Comment\Controllers\Admin\CommentCategoryAdminController@post'
+         * configs
+        */
+        Route::get('admin/comments/config', [
+            'as' => 'comments.config',
+            'uses' => 'CommentAdminController@config'
         ]);
-         /**
-         * delete
-         */
-        Route::get('admin/comment_category/delete', [
-            'as' => 'admin_comment_category.delete',
-            'uses' => 'Foostart\Comment\Controllers\Admin\CommentCategoryAdminController@delete'
+
+        Route::post('admin/comments/config', [
+            'as' => 'comments.config',
+            'uses' => 'CommentAdminController@config'
         ]);
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////CATEGORIES///////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
+
+        /**
+         * language
+        */
+        Route::get('admin/comments/lang', [
+            'as' => 'comments.lang',
+            'uses' => 'CommentAdminController@lang'
+        ]);
+
+        Route::post('admin/comments/lang', [
+            'as' => 'comments.lang',
+            'uses' => 'CommentAdminController@lang'
+        ]);
+
     });
 });

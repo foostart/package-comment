@@ -4,10 +4,9 @@ namespace Foostart\Comment;
 
 use Illuminate\Support\ServiceProvider;
 use LaravelAcl\Authentication\Classes\Menu\SentryMenuFactory;
-
-use URL, Route;
+use URL,
+    Route;
 use Illuminate\Http\Request;
-
 
 class CommentServiceProvider extends ServiceProvider {
 
@@ -17,30 +16,27 @@ class CommentServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot(Request $request) {
-        /**
-         * Publish
-         */
-         $this->publishes([
-            __DIR__.'/config/comment_admin.php' => config_path('comment_admin.php'),
-        ],'config');
 
-        $this->loadViewsFrom(__DIR__ . '/views', 'comment');
+        //generate context key
+//        $this->generateContextKey();
 
+        // load view
+        $this->loadViewsFrom(__DIR__ . '/Views', 'package-comment');
 
-        /**
-         * Translations
-         */
-         $this->loadTranslationsFrom(__DIR__.'/lang', 'comment');
+        // include view composers
+        require __DIR__ . "/composers.php";
 
+        // publish config
+        $this->publishConfig();
 
-        /**
-         * Load view composer
-         */
-        $this->commentViewComposer($request);
+        // publish lang
+        $this->publishLang();
 
-         $this->publishes([
-                __DIR__.'/../database/migrations/' => database_path('migrations')
-            ], 'migrations');
+        // publish views
+        $this->publishViews();
+
+        // publish assets
+        $this->publishAssets();
 
     }
 
@@ -51,54 +47,46 @@ class CommentServiceProvider extends ServiceProvider {
      */
     public function register() {
         include __DIR__ . '/routes.php';
-
-        /**
-         * Load controllers
-         */
-        $this->app->make('Foostart\Comment\Controllers\Admin\CommentAdminController');
-
-         /**
-         * Load Views
-         */
-        $this->loadViewsFrom(__DIR__ . '/views', 'comment');
     }
 
     /**
-     *
+     * Public config to system
+     * @source: vendor/foostart/package-comment/config
+     * @destination: config/
      */
-    public function commentViewComposer(Request $request) {
+    protected function publishConfig() {
+        $this->publishes([
+            __DIR__ . '/config/package-comment.php' => config_path('package-comment.php'),
+                ], 'config');
+    }
 
-        view()->composer('comment::comment*', function ($view) {
-            global $request;
-            $comment_id = $request->get('id');
-            $is_action = empty($comment_id)?'page_add':'page_edit';
+    /**
+     * Public language to system
+     * @source: vendor/foostart/package-comment/lang
+     * @destination: resources/lang
+     */
+    protected function publishLang() {
+        $this->publishes([
+            __DIR__ . '/lang' => base_path('resources/lang'),
+        ]);
+    }
 
-            $view->with('sidebar_items', [
+    /**
+     * Public view to system
+     * @source: vendor/foostart/package-comment/Views
+     * @destination: resources/views/vendor/package-comment
+     */
+    protected function publishViews() {
 
-                /**
-                 * Comments
-                 */
-                //list
-                trans('comment::comment_admin.page_list') => [
-                    'url' => URL::route('admin_comment'),
-                    "icon" => '<i class="fa fa-list-ul" aria-hidden="true"></i>'
-                ],
-                //add
-                trans('comment::comment_admin.'.$is_action) => [
-                    'url' => URL::route('admin_comment.edit'),
-                    "icon" => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'
-                ],
-                /**
-                 * Categories
-                 */
-                //list
-                trans('comment::comment_admin.page_category_list') => [
-                    'url' => URL::route('admin_comment_category'),
-                    "icon" => '<i class="fa fa-sitemap" aria-hidden="true"></i>'
-                ],
-            ]);
-            //
-        });
+        $this->publishes([
+            __DIR__ . '/Views' => base_path('resources/views/vendor/package-comment'),
+        ]);
+    }
+
+    protected function publishAssets() {
+        $this->publishes([
+            __DIR__ . '/public' => public_path('packages/foostart/package-comment'),
+        ]);
     }
 
 }

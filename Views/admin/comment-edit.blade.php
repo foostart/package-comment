@@ -26,7 +26,7 @@
     <div class="col-md-12">
 
         <div class="col-md-8">
-            <div class="panel panel-info">
+             <div class="panel panel-info">
 
                 <!--TITLE BAR-->
                 <div class="panel-heading">

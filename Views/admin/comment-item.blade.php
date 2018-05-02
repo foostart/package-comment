@@ -3,9 +3,9 @@
     $withs = [
         'order' => '5%',
         'name' => '40%',
-        'updated_at' => '40%',
+        'updated_at' => '35%',
         'operations' => '10%',
-        'delete' => '5%',
+        'delete' => '10%',
     ];
 
     global $counter;
@@ -20,14 +20,23 @@
     @endif
 </caption>
 
-<table class="table table-hover">
+<table class="table table-hover" id="tbcomment">
 
     <thead>
         <tr style="height: 50px;">
 
             <!--ORDER-->
-            <th style='width:{{ $withs['order'] }}'>
-                {{ trans($plang_admin.'.columns.order') }}
+            <?php $name = 'comment_id' ?>
+            <th class="hidden-xs" style='width:{{ $withs['order'] }}'>#
+                <a href='{!! $sorting["url"][$name] !!}' class='tb-id' data-order='asc'>
+                    @if($sorting['items'][$name] == 'asc')
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                    @elseif($sorting['items'][$name] == 'desc')
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                    @else
+                        <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                    @endif
+                </a>
             </th>
 
             <!-- NAME -->
@@ -45,7 +54,7 @@
                 </a>
             </th>
 
-            <!-- NAME -->
+            <!-- updated -->
             <?php $name = 'updated_at' ?>
 
             <th class="hidden-xs" style='width:{{ $withs['updated_at'] }}'>{!! trans($plang_admin.'.columns.updated_at') !!}
@@ -59,21 +68,26 @@
                     @endif
                 </a>
             </th>
+               
+            </th>
 
             <!--OPERATIONS-->
             <th style='width:{{ $withs['operations'] }}'>
                 <span class='lb-delete-all'>
                     {{ trans($plang_admin.'.columns.operations') }}
                 </span>
-
+                
+                <div id="an" style="display: none;">
                 {!! Form::submit(trans($plang_admin.'.buttons.delete'), array("class"=>"btn btn-danger pull-right delete btn-delete-all del-trash", 'name'=>'del-trash')) !!}
                 {!! Form::submit(trans($plang_admin.'.buttons.delete'), array("class"=>"btn btn-warning pull-right delete btn-delete-all del-forever", 'name'=>'del-forever')) !!}
+                </div>
+                
             </th>
 
             <!--DELETE-->
             <th style='width:{{ $withs['delete'] }}'>
                 <span class="del-checkbox pull-right">
-                    <input type="checkbox" id="selecctall" />
+                    <input type="checkbox" id="selecctall" onclick="checkAllCheckBox()"/>
                     <label for="del-checkbox"></label>
                 </span>
             </th>
@@ -86,14 +100,14 @@
         @foreach($items as $item)
             <tr>
                 <!--COUNTER-->
-                <td> <?php echo $counter; $counter++ ?> </td>
+                <td> {!! $item->comment_id !!} </td>
 
                 <!--NAME-->
                 <td> {!! $item->comment_name !!} </td>
-
+                 
                 <!--UPDATED AT-->
                 <td> {!! $item->updated_at !!} </td>
-
+                
                 <!--OPERATOR-->
                 <td>
                     <!--edit-->
@@ -127,14 +141,13 @@
                 <!--DELETE-->
                 <td>
                     <span class='box-item pull-right'>
-                        <input type="checkbox" id="<?php echo $item->id ?>" name="ids[]" value="{!! $item->id !!}">
+                        <input type="checkbox" id="<?php echo $item->id ?>" name="ids[]" value="{!! $item->id !!}" onclick="checkedCheckBox()">
                         <label for="box-item"></label>
                     </span>
                 </td>
 
             </tr>
         @endforeach
-
     </tbody>
 
 </table>
@@ -153,5 +166,25 @@
 
 @section('footer_scripts')
     @parent
-    {!! HTML::script('packages/foostart/package-comment/js/form-table.js')  !!}
+    {!! HTML::script('packages/jacopo/laravel-authentication-acl/js/form-table.js')  !!}
+     {!! HTML::script('packages/jacopo/laravel-authentication-acl/js/hideShow.js')  !!}
 @stop
+<script>
+    function checkAllCheckBox() {
+    var checkBox = document.getElementById("selecctall");
+        var an = document.getElementById("an");
+        if (checkBox.checked == true){
+            an.style.display = "block";
+        } else {
+           an.style.display = "none";
+        }
+    }
+    function checkedCheckBox(){
+        var check = $("input[name='ids[]']:checked").length;
+        if(check){
+            $("#an").show();
+        }else {
+            $("#an").hide();
+       }
+   }
+</script>

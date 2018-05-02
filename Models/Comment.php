@@ -24,6 +24,7 @@ class Comment extends FooModel {
 
         //list of field in table
         $this->fillable = [
+            'comment_id',
             'comment_name',
             'category_id',
             'user_id',
@@ -38,6 +39,10 @@ class Comment extends FooModel {
 
         //list of fields for inserting
         $this->fields = [
+            'comment_name' => [
+                'name' => 'comment_name',
+                'type' => 'Int',
+            ],
             'comment_name' => [
                 'name' => 'comment_name',
                 'type' => 'Text',
@@ -78,6 +83,7 @@ class Comment extends FooModel {
 
         //check valid fields for inserting
         $this->valid_insert_fields = [
+            'comment_id',
             'comment_name',
             'user_id',
             'category_id',
@@ -92,6 +98,7 @@ class Comment extends FooModel {
 
         //check valid fields for ordering
         $this->valid_ordering_fields = [
+            'comment_id',
             'comment_name',
             'updated_at',
             $this->field_status,
@@ -316,7 +323,7 @@ class Comment extends FooModel {
         if ($item) {
             switch ($delete_type) {
                 case 'delete-trash':
-                    return $item->fdelete($item);
+                    return $item->delete($item);
                     break;
                 case 'delete-forever':
                     return $item->delete();

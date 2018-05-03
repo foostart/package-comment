@@ -52,7 +52,9 @@ return [
         'operations' => 'Operations',
         'updated_at' => 'Updated at',
         'filename' => 'File name',
-           'id' => 'ID',
+        'id' => 'ID',
+        'status' => 'Status',
+        
     ],
 
 
@@ -137,6 +139,7 @@ return [
         'not-found' => 'Not found items',
         'config' => 'List of configurations',
         'lang' => 'List of languages',
+        'comment-status' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
     ],
 
 
@@ -199,6 +202,7 @@ return [
         'title-search' => 'Search comment',
         'title-backup' => 'Backups',
         'config' => 'Configurations',
+        'comment-status'    => 'Status',
     ],
 
 

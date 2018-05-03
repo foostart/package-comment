@@ -61,6 +61,7 @@ class CommentAdminController extends FooController {
 
         // //set category
         $this->category_ref_name = 'admin/comments';
+        $this->statuses = config('package-comment.status.list');
 
     }
 
@@ -80,6 +81,7 @@ class CommentAdminController extends FooController {
             'items' => $items,
             'request' => $request,
             'params' => $params,
+            'statuses' => $this->statuses,
         ));
 
         return view($this->page_views['admin']['items'], $this->data_view);
@@ -124,6 +126,7 @@ class CommentAdminController extends FooController {
             'categories' => $categories,
             'request' => $request,
             'context' => $context,
+            'statuses' => $this->statuses,
         ));
         return view($this->page_views['admin']['edit'], $this->data_view);
     }

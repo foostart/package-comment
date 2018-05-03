@@ -79,6 +79,10 @@ class Comment extends FooModel {
                 'name' => 'files',
                 'type' => 'Json',
             ],
+             'comment_status' => [
+                'name' => 'comment_status',
+                'type' => 'Int',
+            ],
         ];
 
         //check valid fields for inserting
@@ -106,7 +110,7 @@ class Comment extends FooModel {
         //check valid fields for filter
         $this->valid_filter_fields = [
             'keyword',
-            'status',
+            'comment_status',
         ];
 
         //primary key
@@ -223,12 +227,7 @@ class Comment extends FooModel {
                     }
                 }
             }
-        } elseif ($by_status) {
-
-            $elo = $elo->where($this->table . '.'.$this->field_status, '=', $this->status['publish']);
-
-        }
-
+        } 
         return $elo;
     }
 
@@ -279,8 +278,6 @@ class Comment extends FooModel {
                 $comment->$key = $value;
             }
 
-            $comment->$field_status = $this->status['publish'];
-
             $comment->save();
 
             return $comment;
@@ -299,7 +296,6 @@ class Comment extends FooModel {
 
         $dataFields = $this->getDataFields($params, $this->fields);
 
-        $dataFields[$this->field_status] = $this->status['publish'];
 
 
         $item = self::create($dataFields);
@@ -334,5 +330,15 @@ class Comment extends FooModel {
 
         return FALSE;
     }
+    
+    
+    /**
+     * Get list of statuses to push to select
+     * @return ARRAY list of statuses
+     */
+    public function getPluckStatus() {
+        $pluck_status = config('package-comment.status.list');
+        return $pluck_status;
+     }
 
 }

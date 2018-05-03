@@ -70,6 +70,7 @@ View::composer([
             'comment_id' => trans($plang_admin.'.fields.id'),
             'comment_name' => trans($plang_admin.'.fields.name'),
             'updated_at' => trans($plang_admin.'.fields.updated_at'),
+            'comment_status'  => trans($plang_admin.'.fields.status'),
         ];
         $sorting = [
             'label' => $orders,

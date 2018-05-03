@@ -74,6 +74,16 @@
             'errors' => $errors,
             ])
             <!-- /LIST OF CATEGORIES -->
+            
+             <!--STATUS-->
+ 
+            @include('package-category::admin.partials.radio', [
+                'name' => 'comment_status',
+                'label' => trans($plang_admin.'.labels.comment-status'),
+                'value' => @$item->comment_status,
+                'description' => trans($plang_admin.'.descriptions.comment-status'),
+                'items' => $statuses,
+            ])
         </div>
 
         <!--MENU 2-->

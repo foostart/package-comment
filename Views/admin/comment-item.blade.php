@@ -1,11 +1,12 @@
 @if(!empty($items) && (!$items->isEmpty()) )
 <?php
     $withs = [
-        'order' => '5%',
-        'name' => '40%',
-        'updated_at' => '35%',
+        'order' => '10%',
+        'name' => '30%',
+        'updated_at' => '25%',
         'operations' => '10%',
         'delete' => '10%',
+        'status' => '15%',
     ];
 
     global $counter;
@@ -30,11 +31,11 @@
             <th class="hidden-xs" style='width:{{ $withs['order'] }}'>#
                 <a href='{!! $sorting["url"][$name] !!}' class='tb-id' data-order='asc'>
                     @if($sorting['items'][$name] == 'asc')
-                        <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                        <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
                     @elseif($sorting['items'][$name] == 'desc')
-                        <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                        <i class="fa fa-sort-amount-desc" aria-hidden="true"></i>
                     @else
-                        <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                         <i class="fa fa-sort-desc" aria-hidden="true"></i>
                     @endif
                 </a>
             </th>
@@ -69,6 +70,19 @@
                 </a>
             </th>
                
+            <!--status-->
+            <?php $name = 'comment_status' ?>
+
+            <th class="hidden-xs" style='width:{{ $withs['status'] }}'>{!! trans($plang_admin.'.columns.status') !!}
+                <a href='{!! $sorting["url"][$name] !!}' class='tb-id' data-order='asc'>
+                    @if($sorting['items'][$name] == 'asc')
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                    @elseif($sorting['items'][$name] == 'desc')
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                    @else
+                        <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                    @endif
+                </a>
             </th>
 
             <!--OPERATIONS-->
@@ -107,6 +121,17 @@
                  
                 <!--UPDATED AT-->
                 <td> {!! $item->updated_at !!} </td>
+                
+                <!--STATUS-->
+                <td style="text-align: center;">
+
+                    <?php $status = config('package-comment.status'); ?>
+                    @if($item->comment_status && (isset($status['list'][$item->comment_status])))
+                        <i class="fa fa-circle" style="color:{!! $status['color'][$item->comment_status] !!}" title='{!! $status["list"][$item->comment_status] !!}'></i>
+                    @else
+                    <i class="fa fa-circle-o red" title='{!! trans($plang_admin.".labels.unknown") !!}'></i>
+                    @endif
+                </td>
                 
                 <!--OPERATOR-->
                 <td>
@@ -166,8 +191,7 @@
 
 @section('footer_scripts')
     @parent
-    {!! HTML::script('packages/jacopo/laravel-authentication-acl/js/form-table.js')  !!}
-     {!! HTML::script('packages/jacopo/laravel-authentication-acl/js/hideShow.js')  !!}
+    {!! HTML::script('packages/foostart/package-comment/public/js/form-table.js')  !!}
 @stop
 <script>
     function checkAllCheckBox() {

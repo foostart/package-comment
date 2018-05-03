@@ -177,7 +177,8 @@ return [
         'description' => 'Comment Description',
         'overview' => 'Comment Overview',
         'slug' => 'Slug',
-        'updated_at' => 'Updated at'
+        'updated_at' => 'Updated at',
+        'status' => 'Comment status',
     ],
 
 

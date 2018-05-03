@@ -82,7 +82,7 @@
                 'label' => trans($plang_admin.'.labels.comment-status'),
                 'value' => @$item->comment_status,
                 'description' => trans($plang_admin.'.descriptions.comment-status'),
-                'items' => $statuses,
+                'items' => $status,
             ])
         </div>
 

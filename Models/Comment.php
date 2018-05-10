@@ -41,10 +41,6 @@ class Comment extends FooModel {
         $this->fields = [
             'comment_name' => [
                 'name' => 'comment_name',
-                'type' => 'Int',
-            ],
-            'comment_name' => [
-                'name' => 'comment_name',
                 'type' => 'Text',
             ],
             'category_id' => [
@@ -340,5 +336,20 @@ class Comment extends FooModel {
         $pluck_status = config('package-comment.status.list');
         return $pluck_status;
      }
+     
+     
+     /**
+     *
+     * @param ARRAY $input list of parameters
+     * @return boolean TRUE incase delete successfully otherwise return FALSE
+     */
+    public function deleteItemAdd($input = []) {
+
+        $item = $this->find($input['id']);
+        return $item->delete($item);
+
+        return FALSE;
+    }
+     
 
 }

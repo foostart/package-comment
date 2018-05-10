@@ -106,6 +106,30 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'comments.lang',
             'uses' => 'CommentAdminController@lang'
         ]);
+        
+        /**
+         * add
+         */
+        Route::get('admin/comments/add', [
+            'as' => 'comments.add',
+            'uses' => 'CommentAdminController@add'
+        ]);
+        
+        /**
+         * postadd
+         */
+        Route::post('admin/comments/add', [
+            'as' => 'comments.postadd',
+            'uses' => 'CommentAdminController@postadd'
+        ]);
+        
+         /**
+         * delete comment
+         */
+        Route::get('admin/comments/deletecomment', [
+            'as' => 'comments.deletecomment',
+            'uses' => 'CommentAdminController@deletecomment'
+        ]);
 
     });
 });

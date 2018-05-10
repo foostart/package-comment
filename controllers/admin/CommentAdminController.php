@@ -19,6 +19,7 @@ use Foostart\Category\Library\Controllers\FooController;
 use Foostart\Comment\Models\Comment;
 use Foostart\Category\Models\Category;
 use Foostart\Comment\Validators\CommentValidator;
+use Foostart\Comment\Validators\CommentaddValidator;
 
 
 class CommentAdminController extends FooController {
@@ -35,7 +36,7 @@ class CommentAdminController extends FooController {
 
         // validators
         $this->obj_validator = new CommentValidator();
-
+        $this->obj_validatoradd = new CommentaddValidator();
         // set language files
         $this->plang_admin = 'comment-admin';
         $this->plang_front = 'comment-front';
@@ -54,6 +55,7 @@ class CommentAdminController extends FooController {
                 'edit'  => $this->package_name.'::admin.'.$this->package_base_name.'-edit',
                 'config'  => $this->package_name.'::admin.'.$this->package_base_name.'-config',
                 'lang'  => $this->package_name.'::admin.'.$this->package_base_name.'-lang',
+                'add'  => $this->package_name.'::admin.'.$this->package_base_name.'-add',
             ]
         ];
 
@@ -94,32 +96,25 @@ class CommentAdminController extends FooController {
      * @date 26/12/2017
      */
     public function edit(Request $request) {
-
+        
         $item = NULL;
         $categories = NULL;
-
         $params = $request->all();
         $params['id'] = $request->get('id', NULL);
-
         $context = $this->obj_item->getContext($this->category_ref_name);
-
         if (!empty($params['id'])) {
-
             $item = $this->obj_item->selectItem($params, FALSE);
-
             if (empty($item)) {
                 return Redirect::route($this->root_router.'.list')
                                 ->withMessage(trans($this->plang_admin.'.actions.edit-error'));
             }
         }
-
         //get categories by context
         $context = $this->obj_item->getContext($this->category_ref_name);
         if ($context) {
             $params['context_id'] = $context->context_id;
             $categories = $this->obj_category->pluckSelect($params);
         }
-
         // display view
         $this->data_view = array_merge($this->data_view, array(
             'item' => $item,
@@ -138,59 +133,40 @@ class CommentAdminController extends FooController {
      */
     public function post(Request $request) {
 
-        $item = NULL;
-
+       $item = NULL;
         $params = array_merge($request->all(), $this->getUser());
-
         $is_valid_request = $this->isValidRequest($request);
-
         $id = (int) $request->get('id');
-
         if ($is_valid_request && $this->obj_validator->validate($params)) {// valid data
-
             // update existing item
             if (!empty($id)) {
-
                 $item = $this->obj_item->find($id);
-
                 if (!empty($item)) {
-
                     $params['id'] = $id;
                     $item = $this->obj_item->updateItem($params);
-
                     // message
                     return Redirect::route($this->root_router.'.edit', ["id" => $item->id])
                                     ->withMessage(trans($this->plang_admin.'.actions.edit-ok'));
                 } else {
-
                     // message
                     return Redirect::route($this->root_router.'.list')
                                     ->withMessage(trans($this->plang_admin.'.actions.edit-error'));
                 }
-
             // add new item
             } else {
-
                 $item = $this->obj_item->insertItem($params);
-
                 if (!empty($item)) {
-
                     //message
                     return Redirect::route($this->root_router.'.edit', ["id" => $item->id])
                                     ->withMessage(trans($this->plang_admin.'.actions.add-ok'));
                 } else {
-
                     //message
                     return Redirect::route($this->root_router.'.edit', ["id" => $item->id])
                                     ->withMessage(trans($this->plang_admin.'.actions.add-error'));
                 }
-
             }
-
         } else { // invalid data
-
             $errors = $this->obj_validator->getErrors();
-
             // passing the id incase fails editing an already existing item
             return Redirect::route($this->root_router.'.edit', $id ? ["id" => $id]: [])
                     ->withInput()->withErrors($errors);
@@ -393,6 +369,152 @@ class CommentAdminController extends FooController {
         ));
 
         return view($this->page_views['admin']['edit'], $this->data_view);
+    }
+    
+    /**
+     * edit existing item by {id} parameters OR
+     * Add new item
+     * @return view add page
+     */
+    public function add(Request $request) {
+        $item = NULL;
+        $categories = NULL;
+
+        $params = $request->all();
+        $items = $this->obj_item->selectItems($params);
+        $item = $this->obj_item->selectItems($params);
+        $params['id'] = $request->get('id', NULL);
+        $context = $this->obj_item->getContext($this->category_ref_name);
+
+        if (!empty($params['id'])) {
+
+            $item = $this->obj_item->selectItem($params, FALSE);
+
+            if (empty($item)) {
+                return Redirect::route($this->root_router.'.add')
+                                ->withMessage(trans($this->plang_admin.'.actions.edit-error'));
+            }
+        }
+
+        //get categories by context
+        $context = $this->obj_item->getContext($this->category_ref_name);
+        if ($context) {
+            $params['context_id'] = $context->context_id;
+            $categories = $this->obj_category->pluckSelect($params);
+        }
+
+        // display view
+        $this->data_view = array_merge($this->data_view, array(
+            'items' => $items,
+            'item' => $item,
+            'categories' => $categories,
+            'request' => $request,
+            'context' => $context,
+        ));
+        return view($this->page_views['admin']['add'], $this->data_view);
+    }
+    
+    /**
+     * Edit existing item by {id} parameters OR
+     * post comment
+     * @return view add page
+     */
+    public function postadd(Request $request)
+    {
+         $item = NULL;
+
+        $params = array_merge($request->all(), $this->getUser());
+
+        $is_valid_request = $this->isValidRequest($request);
+
+        $id = (int) $request->get('id');
+
+        if ($is_valid_request && $this->obj_validatoradd->validate($params)) {// valid data
+
+            // update existing item
+            if (!empty($id)) {
+
+                $item = $this->obj_item->find($id);
+
+                if (!empty($item)) {
+
+                    $params['id'] = $id;
+                    $item = $this->obj_item->updateItem($params);
+
+                    // message
+                    return Redirect::route($this->root_router.'.add', ["id" => $item->id])
+                                    ->withMessage(trans($this->plang_admin.'.actions.edit-ok'));
+                } else {
+
+                    // message
+                    return Redirect::route($this->root_router.'.add')
+                                    ->withMessage(trans($this->plang_admin.'.actions.edit-error'));
+                }
+
+            // add new item
+            } else {
+
+                $item = $this->obj_item->insertItem($params);
+
+                if (!empty($item)) {
+
+                    //message
+                    return Redirect::route($this->root_router.'.add', ["id" => $item->id])
+                                    ->withMessage(trans($this->plang_admin.'.actions.add-ok'));
+                } else {
+
+                    //message
+                    return Redirect::route($this->root_router.'.add', ["id" => $item->id])
+                                    ->withMessage(trans($this->plang_admin.'.actions.add-error'));
+                }
+
+            }
+
+        } else { // invalid data
+
+            $errors = $this->obj_validator->getErrors();
+
+            // passing the id incase fails editing an already existing item
+            return Redirect::route($this->root_router.'.add', $id ? ["id" => $id]: [])
+                    ->withInput()->withErrors($errors);
+        }
+    }
+    
+    /**
+     * Edit existing item by {id} parameters OR
+     * delete comment
+     * @return view edit page
+     * @date 26/12/2017
+     */
+    public function deletecomment(Request $request){
+        $item = NULL;
+        $flag = TRUE;
+        $params = array_merge($request->all(), $this->getUser());
+        $id = (int)$request->get('id');
+        $ids = $request->get('ids');
+
+        $is_valid_request = $this->isValidRequest($request);
+
+        if ($is_valid_request && (!empty($id) || !empty($ids))) {
+
+            $ids = !empty($id)?[$id]:$ids;
+
+            foreach ($ids as $id) {
+
+                $params['id'] = $id;
+
+                if (!$this->obj_item->deleteItemAdd($params)) {
+                    $flag = FALSE;
+                }
+            }
+            if ($flag) {
+                return Redirect::route($this->root_router.'.add')
+                                ->withMessage(trans($this->plang_admin.'.actions.delete-ok'));
+            }
+        }
+
+        return Redirect::route($this->root_router.'.add')
+                        ->withMessage(trans($this->plang_admin.'.actions.delete-error'));
     }
 
 

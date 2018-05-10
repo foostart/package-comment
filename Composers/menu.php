@@ -21,6 +21,7 @@ View::composer([
                 'package-comment::admin.comment-search',
                 'package-comment::admin.comment-config',
                 'package-comment::admin.comment-lang',
+                'package-comment::admin.comment-add',
     ], function ($view) {
 
         /**
@@ -58,6 +59,10 @@ View::composer([
             trans('comment-admin.sidebar.lang') => [
                 "url" => URL::route('comments.lang', []),
                 'icon' => '<i class="fa fa-language" aria-hidden="true"></i>'
+            ],
+            trans('comment-admin.sidebar.addcoment') => [
+                "url" => URL::route('comments.add', []),
+                'icon' => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'
             ],
         ]);
 

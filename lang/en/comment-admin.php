@@ -33,6 +33,7 @@ return [
         'config' => 'Configurations',
         'lang' => 'Languages',
         'category' => 'Categories',
+        'addcoment' => 'AddComment',
     ],
 
 
@@ -92,6 +93,7 @@ return [
         'add' => 'Add',
         'save' => 'Save',
         'delete' => 'Delete',
+        'send' => 'Send'
     ],
 
 

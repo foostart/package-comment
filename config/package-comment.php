@@ -85,4 +85,13 @@ return [
             99 => '#5bc0de'
         ]
     ],
+
+
+     //Number of worlds
+    'lengthadd' => [
+        'comment_description' => [
+            'min' => 10,
+            'max' => 255,//unlimit
+        ],
+    ],
 ];

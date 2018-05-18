@@ -33,6 +33,7 @@
 
             <!--SORTING-->
             @include('package-category::admin.partials.sorting')
+            <!--SORTING-->
 
             <div class='hidden-field'>
                 {!! Form::hidden('context',@$request->get('context',null)) !!}

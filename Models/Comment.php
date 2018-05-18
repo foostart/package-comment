@@ -295,7 +295,6 @@ class Comment extends FooModel {
 
 
         $item = self::create($dataFields);
-
         $key = $this->primaryKey;
         $item->id = $item->$key;
 

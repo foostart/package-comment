@@ -76,6 +76,7 @@ View::composer([
             'comment_name' => trans($plang_admin.'.fields.name'),
             'updated_at' => trans($plang_admin.'.fields.updated_at'),
             'comment_status'  => trans($plang_admin.'.fields.status'),
+            'comment_description' => trans($plang_admin.'.fields.name'),
         ];
         $sorting = [
             'label' => $orders,
@@ -134,8 +135,8 @@ View::composer([
 
         //Order by
         $order_by = [
-            'asc' => trans('foostart.order_by.asc'),
-            'desc' => trans('foostart.order_by.desc'),
+            'asc' => trans('jacopo-admin.order.by-asc'),
+            'desc' => trans('jacopo-admin.order.by-desc'),
         ];
         $view->with('order_by', $order_by);
 });

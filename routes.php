@@ -10,7 +10,10 @@ Route::get('comment', [
     'uses' => 'Foostart\Comment\Controllers\Front\CommentFrontController@index'
 ]);
 
-
+ Route::get('home', [
+            'as' => 'comments.home',
+            'uses' => 'Foostart\Comment\Controllers\Front\HomeController@index'
+        ]);
 /**
  * ADMINISTRATOR
  */
@@ -130,6 +133,8 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'comments.deletecomment',
             'uses' => 'CommentAdminController@deletecomment'
         ]);
-
+        
+       
     });
+    
 });

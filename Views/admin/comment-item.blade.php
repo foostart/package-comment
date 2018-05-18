@@ -41,9 +41,9 @@
             </th>
 
             <!-- NAME -->
-            <?php $name = 'comment_name' ?>
+            <?php $name = 'comment_description' ?>
 
-            <th class="hidden-xs" style='width:{{ $withs['name'] }}'>{!! trans($plang_admin.'.columns.name') !!}
+            <th class="hidden-xs" style='width:{{ $withs['name'] }}'>{!! trans($plang_admin.'.columns.description') !!}
                 <a href='{!! $sorting["url"][$name] !!}' class='tb-id' data-order='asc'>
                     @if($sorting['items'][$name] == 'asc')
                         <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
@@ -117,7 +117,7 @@
                 <td> {!! $item->comment_id !!} </td>
 
                 <!--NAME-->
-                <td> {!! $item->comment_name !!} </td>
+                <td> {!! $item->comment_description !!} </td>
                  
                 <!--UPDATED AT-->
                 <td> {!! $item->updated_at !!} </td>

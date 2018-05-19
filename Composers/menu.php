@@ -135,7 +135,8 @@ View::composer([
 
         //Order by
         $order_by = [
-            
+            'asc' => trans('jacopo-admin.order.by-asc'),
+            'desc' => trans('jacopo-admin.order.by-desc'),
         ];
         $view->with('order_by', $order_by);
 });

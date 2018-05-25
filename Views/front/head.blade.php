@@ -13,15 +13,15 @@
         <meta name="keywords" content="Tai lieu web"/>
 
         <link rel="shortcut icon" href="http://localhost/laravel/vendor/foostart/package-comment/public/images/favicon.ico"/>
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/swiper.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap-theme.min.css') }}" rel="stylesheet">
-     <link href="{{ asset('css/1214.css') }}" rel="stylesheet">
-    <script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
-    <script src="js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="js/swiper.min.js" type="text/javascript"></script>
-    <script src="js/1214.js" type="text/javascript"></script>
+    <link href="{{ asset('http://localhost/laravel/vendor/foostart/package-comment/public/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('http://localhost/laravel/vendor/foostart/package-comment/public/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('http://localhost/laravel/vendor/foostart/package-comment/public/css/swiper.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('http://localhost/laravel/vendor/foostart/package-comment/public/css/bootstrap-theme.min.css') }}" rel="stylesheet">
+     <link href="{{ asset('http://localhost/laravel/vendor/foostart/package-comment/public/css/1214.css') }}" rel="stylesheet">
+    <script src="http://localhost/laravel/vendor/foostart/package-comment/public/js/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="http://localhost/laravel/vendor/foostart/package-comment/public/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="http://localhost/laravel/vendor/foostart/package-comment/public/js/swiper.min.js" type="text/javascript"></script>
+    <script src="http://localhost/laravel/vendor/foostart/package-comment/public/js/1214.js" type="text/javascript"></script>
  
 
 
